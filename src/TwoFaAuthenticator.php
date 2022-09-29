@@ -20,7 +20,7 @@ class TwoFaAuthenticator extends Authenticator
      */
     protected function getGoogle2FASecretKey()
     {
-        $secret = $this->getUser()->twoFa->google2fa_secret;
+        $secret = $this->getUser()->twoFa->secret;
 
         if (is_null($secret) || empty($secret)) {
             throw new Exception('Secret key cannot be empty.');

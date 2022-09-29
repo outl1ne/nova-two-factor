@@ -4,6 +4,8 @@ namespace Outl1ne\NovaTwoFactor;
 
 use Laravel\Nova\Nova;
 use Laravel\Nova\Tool;
+use Illuminate\Http\Request;
+use Laravel\Nova\Menu\MenuSection;
 
 class NovaTwoFactor extends Tool
 {
@@ -26,5 +28,14 @@ class NovaTwoFactor extends Tool
         ];
 
         return array_merge($except, config('nova-two-factor.excluded_routes'));
+    }
+
+    public function menu(Request $request)
+    {
+        if (config('nova-two-factor.menu.show', true)) {
+            return MenuSection::make(__('twoFactor.menuItemTitle'))
+                ->path('/nova-two-factor')
+                ->icon(config('nova-two-factor.menu.icon'));
+        }
     }
 }

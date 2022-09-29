@@ -24,7 +24,7 @@ class TwoFactorController extends Controller
         $user = auth($this->novaGuard)->user();
 
         if ($user->twoFa?->confirmed) {
-            return response()->json(['message' => __('Already verified!')], 400);
+            return response()->json(['message' => __('Already verified.')], 400);
         }
 
         $google2fa = new Google2FA();
@@ -40,7 +40,7 @@ class TwoFactorController extends Controller
 
         $user2fa = new TwoFa();
         $user2fa->user_id = $user->id;
-        $user2fa->google2fa_secret = $secretKey;
+        $user2fa->secret = $secretKey;
         $user2fa->recovery = $recoveryKeyHashed;
         $user2fa->save();
 
@@ -58,26 +58,26 @@ class TwoFactorController extends Controller
         $authenticator = app(TwoFaAuthenticator::class)->boot(request());
 
         if ($authenticator->isAuthenticated()) {
-            auth($this->novaGuard)->user()->twoFa()->update(['confirmed' => true, 'google2fa_enabled' => true]);
+            auth($this->novaGuard)->user()->twoFa()->update(['confirmed' => true, 'enabled' => true]);
 
             return response()->json([
-                'message' => __('2FA security successfully activated !')
+                'message' => __('2FA security successfully activated.')
             ]);
         }
 
         // auth fail
         return response()->json([
-            'message' => __('Invalid OTP !. Please try again')
+            'message' => __('Invalid OTP. Please try again.')
         ], 422);
     }
 
     public function toggle2Fa(Request $request)
     {
         $status = $request->get('status') === 1;
-        auth($this->novaGuard)->user()->twoFa()->update(['google2fa_enabled' => $status]);
+        auth($this->novaGuard)->user()->twoFa()->update(['enabled' => $status]);
 
         return response()->json([
-            'message' => __($status ? '2FA feature enabled!' : '2FA feature disabled!')
+            'message' => __($status ? '2FA feature enabled.' : '2FA feature disabled.')
         ]);
     }
 
@@ -87,7 +87,7 @@ class TwoFactorController extends Controller
 
         return [
             'registered' => !empty($user->twoFa),
-            'enabled' => $user->twoFa->google2fa_enabled ?? false,
+            'enabled' => $user->twoFa->enabled ?? false,
             'confirmed' => $user->twoFa->confirmed ?? false
         ];
     }
@@ -112,7 +112,7 @@ class TwoFactorController extends Controller
             return redirect()->to(config('nova.path'));
         }
 
-        return back()->withErrors([__('Incorrect OTP !')]);
+        return back()->withErrors([__('Incorrect OTP.')]);
     }
 
     public function recover(Request $request)
@@ -127,6 +127,6 @@ class TwoFactorController extends Controller
             return redirect()->to(config('nova.path'));
         }
 
-        return back()->withErrors([__('Incorrect recovery code !')]);
+        return back()->withErrors([__('Incorrect recovery code.')]);
     }
 }

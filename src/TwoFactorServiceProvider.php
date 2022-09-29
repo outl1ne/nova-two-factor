@@ -5,6 +5,7 @@ namespace Outl1ne\NovaTwoFactor;
 use Laravel\Nova\Nova;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Nova\Http\Middleware\Authenticate;
 use Outl1ne\NovaTwoFactor\Http\Middleware\Authorize;
 use Outl1ne\NovaTranslationsLoader\LoadsNovaTranslations;
 

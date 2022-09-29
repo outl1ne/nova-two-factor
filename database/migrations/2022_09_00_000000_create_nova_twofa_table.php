@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Schema;
+use Outl1ne\NovaTwoFactor\NovaTwoFactor;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use Outl1ne\NovaTwoFactor\NovaTwoFactor;
 
 class CreateNovaTwoFaTable extends Migration
 {
@@ -19,11 +19,11 @@ class CreateNovaTwoFaTable extends Migration
         $userKey = (new (config('nova-two-factor.user_model')))->getKeyName();
 
         Schema::create($tableName, function (Blueprint $table) use ($userTable, $userKey) {
-            $table->increments('id');
+            $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->boolean('google2fa_enabled')->default(false);
+            $table->boolean('enabled')->default(false);
             $table->boolean('confirmed')->default(false);
-            $table->string('google2fa_secret')->nullable();
+            $table->string('secret')->nullable();
             $table->text('recovery')->nullable();
             $table->timestamps();
 
@@ -40,6 +40,7 @@ class CreateNovaTwoFaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('nova_twofa');
+        $tableName = NovaTwoFactor::getTableName();
+        Schema::dropIfExists($tableName);
     }
 }

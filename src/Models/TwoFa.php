@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class TwoFa extends Model
 {
     protected $casts = [
-        'google2fa_enabled' => 'boolean',
+        'enabled' => 'boolean',
         'confirmed' => 'boolean',
     ];
 

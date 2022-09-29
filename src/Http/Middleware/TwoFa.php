@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Outl1ne\NovaTwoFactor\Http\Middleware;
-
 
 use Closure;
 use Outl1ne\NovaTwoFactor\NovaTwoFactor;
@@ -42,7 +40,7 @@ class TwoFa
         $twoFaState = auth($this->novaGuard)->user()->twoFa ?? null;
 
         // turn off security if no user2fa record
-        if (!$twoFaState || $twoFaState->google2fa_enabled === 0) {
+        if (!$twoFaState || !$twoFaState->enabled) {
             return $next($request);
         }
 
