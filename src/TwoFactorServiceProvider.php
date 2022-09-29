@@ -6,6 +6,7 @@ use Laravel\Nova\Nova;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Outl1ne\NovaTwoFactor\Http\Middleware\Authorize;
+use Outl1ne\NovaTranslationsLoader\LoadsNovaTranslations;
 
 class TwoFactorServiceProvider extends ServiceProvider
 {
