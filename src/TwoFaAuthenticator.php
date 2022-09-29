@@ -1,7 +1,6 @@
 <?php
 
-
-namespace Visanduma\NovaTwoFactor;
+namespace Outl1ne\NovaTwoFactor;
 
 use Exception;
 use PragmaRX\Google2FALaravel\Support\Authenticator;
@@ -10,8 +9,7 @@ class TwoFaAuthenticator extends Authenticator
 {
     protected function canPassWithoutCheckingOTP()
     {
-        return
-            !$this->isEnabled() ||
+        return !$this->isEnabled() ||
             $this->noUserIsAuthenticated() ||
             $this->twoFactorAuthStillValid();
     }
@@ -23,6 +21,7 @@ class TwoFaAuthenticator extends Authenticator
     protected function getGoogle2FASecretKey()
     {
         $secret = $this->getUser()->twoFa->google2fa_secret;
+
         if (is_null($secret) || empty($secret)) {
             throw new Exception('Secret key cannot be empty.');
         }

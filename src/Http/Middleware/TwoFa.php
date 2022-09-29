@@ -1,14 +1,12 @@
 <?php
 
 
-namespace Visanduma\NovaTwoFactor\Http\Middleware;
+namespace Outl1ne\NovaTwoFactor\Http\Middleware;
 
 
 use Closure;
-use Illuminate\Support\Str;
-use Nette\Utils\Html;
-use PragmaRX\Google2FA\Google2FA as G2fa;
-use Visanduma\NovaTwoFactor\TwoFaAuthenticator;
+use Outl1ne\NovaTwoFactor\NovaTwoFactor;
+use Outl1ne\NovaTwoFactor\TwoFaAuthenticator;
 
 class TwoFa
 {
@@ -29,16 +27,9 @@ class TwoFa
      */
     public function handle($request, Closure $next)
     {
+        $excludedRoutes = NovaTwoFactor::getExcludedRoutes();
 
-        $except = [
-            'nova-vendor/nova-two-factor/authenticate',
-            'nova-vendor/nova-two-factor/recover'
-        ];
-
-        $except = array_merge($except,config('nova-two-factor.except_routes'));
-
-
-        if (!config('nova-two-factor.enabled') || in_array($request->path(),$except)) {
+        if (!config('nova-two-factor.enabled') || in_array($request->path(), $excludedRoutes)) {
             return $next($request);
         }
 
@@ -48,18 +39,13 @@ class TwoFa
             return $next($request);
         }
 
+        $twoFaState = auth($this->novaGuard)->user()->twoFa ?? null;
+
         // turn off security if no user2fa record
-        if(!auth($this->novaGuard)->user()->twoFa){
+        if (!$twoFaState || $twoFaState->google2fa_enabled === 0) {
             return $next($request);
         }
-
-        // turn off security if 2fa is off
-        if(auth($this->novaGuard)->user()->twoFa && auth($this->novaGuard)->user()->twoFa->google2fa_enable === 0){
-            return $next($request);
-        }
-
 
         return response(view('nova-two-factor::sign-in'));
     }
-
 }

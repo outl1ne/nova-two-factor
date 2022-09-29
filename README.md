@@ -1,130 +1,80 @@
 <p align="center">
-
-<img src="https://github.com/Visanduma/nova-two-factor/blob/c26d41cb38c5850e7ee3863e34e5fd3b0c3f18a5/resources/img/nova-two-factor-banner.png?raw=true" />
-
+    <img src="https://github.com/outl1ne/nova-two-factor/blob/main/resources/img/nova-two-factor-banner.png?raw=true" />
 </p>
 
-[![Latest Stable Version](http://poser.pugx.org/visanduma/nova-two-factor/v)](https://packagist.org/packages/visanduma/nova-two-factor) [![Total Downloads](http://poser.pugx.org/visanduma/nova-two-factor/downloads)](https://packagist.org/packages/visanduma/nova-two-factor) [![Latest Unstable Version](http://poser.pugx.org/visanduma/nova-two-factor/v/unstable)](https://packagist.org/packages/visanduma/nova-two-factor) [![License](http://poser.pugx.org/visanduma/nova-two-factor/license)](https://packagist.org/packages/visanduma/nova-two-factor) [![PHP Version Require](http://poser.pugx.org/visanduma/nova-two-factor/require/php)](https://packagist.org/packages/visanduma/nova-two-factor)
+[![Latest Stable Version](http://poser.pugx.org/outl1ne/nova-two-factor/v)](https://packagist.org/packages/outl1ne/nova-two-factor) [![Total Downloads](http://poser.pugx.org/outl1ne/nova-two-factor/downloads)](https://packagist.org/packages/outl1ne/nova-two-factor) [![Latest Unstable Version](http://poser.pugx.org/outl1ne/nova-two-factor/v/unstable)](https://packagist.org/packages/outl1ne/nova-two-factor) [![License](http://poser.pugx.org/outl1ne/nova-two-factor/license)](https://packagist.org/packages/outl1ne/nova-two-factor) [![PHP Version Require](http://poser.pugx.org/outl1ne/nova-two-factor/require/php)](https://packagist.org/packages/outl1ne/nova-two-factor)
 
 # Nova-Two-Factor
-Laravel nova in-dashboard 2FA security feature
 
+This [Laravel Nova](https://nova.laravel.com) package adds 2FA support to the Nova dashboard.
 
-## Look
+## Requirements
 
-Setup 2FA
+- `php: >=8.0`
+- `laravel/nova: ^4.15`
+
+## Screenshots
+
+#### Setup 2FA
 
 ![screenshot](/resources/img/sc-1.png)
 
-Enable/Disable feature
-
-![screenshot](/resources/img/sc-2.png)
-
-Nova login screen with 2FA security
+#### Nova login screen with 2FA security
 
 ![screenshot](/resources/img/sc-3.png)
 
-1. Pubish config & migration
+## Installation
 
-`` php artisan vendor:publish --provider="Visanduma\NovaTwoFactor\ToolServiceProvider" ``
+Install the package in a Laravel Nova project via Composer and run migrations:
 
+```bash
+# Install nova-two-factor
+composer require outl1ne/nova-two-factor
 
-Change configs as your needs
+# Optionally publish the configuration and edit it
+php artisan vendor:publish --provider="Outl1ne\NovaTwoFactor\TwoFactorServiceProvider" --tag="config"
 
-``` 
-
-return [
-    
-     // enable or disale 2FA feature. default is enabled
-    'enabled' => env('NOVA_TWO_FA_ENABLE',true),
-    
-    // name of authenticatable entity table. usually - users
-    'user_table' => 'users',
-    
-    // Entity primary key
-    'user_id_column' => 'id',
-    
-    // authenticatable model class
-    'user_model' => \App\Models\User::class
-
-    /* Change visibility of Nova Two Fa menu in right sidebar */
-    'showin_sidebar' => true,
-
-    'menu_text' => 'Two FA',
-
-    'menu_icon' => 'lock-closed',
-
-    /* Exclude any routes from 2fa security */
-    'except_routes' => [
-        //
-    ]
-
-];
-
+# Run migrations
+php artisan migrate
 ```
 
+Add the ProtectWith2FA trait to your configured User model.
 
-2. Use ProtectWith2FA trait in configured model
-
-``` 
+```php
 <?php
 
 namespace App\Models;
 
-use Visanduma\NovaTwoFactor\ProtectWith2FA;
+use Outl1ne\NovaTwoFactor\ProtectWith2FA;
 
-class User extends Authenticatable{
-
+class User extends Authenticatable {
     use ProtectWith2FA;
 }
 
 ```
 
+Add the TwoFa middleware to your project's Nova config file (`config/nova.php`).
 
-
-3. Add TwoFa middleware to nova config file
-
-
-``` 
-/*
-    |--------------------------------------------------------------------------
-    | Nova Route Middleware
-    |--------------------------------------------------------------------------
-    |
-    | These middleware will be assigned to every Nova route, giving you the
-    | chance to add your own middleware to this stack or override any of
-    | the existing middleware. Or, you can just stick with this stack.
-    |
-    */
-
-    'middleware' => [
-        ...
-        \Visanduma\NovaTwoFactor\Http\Middleware\TwoFa::class
-    ],
-
+```php
+  'middleware' => [
+    // ...
+    \Outl1ne\NovaTwoFactor\Http\Middleware\TwoFa::class
+  ],
 ```
 
+Register NovaTwoFactor tool in NovaServiceProvider file.
 
-4. Register NovaTwoFactor tool in Nova Service Provider
-
-``` 
-<?php
-
+```php
 class NovaServiceProvider extends NovaApplicationServiceProvider{
 
 public function tools()
     {
         return [
-            ...
-            new \Visanduma\NovaTwoFactor\NovaTwoFactor()
-
+            // ...
+            \Outl1ne\NovaTwoFactor\NovaTwoFactor::make()
         ];
     }
 
 }
 
-
 ```
-
-5. Run `` php artisan migrate ``
-6. You are done !

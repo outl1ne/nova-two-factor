@@ -1,9 +1,9 @@
 <?php
 
-namespace Visanduma\NovaTwoFactor\Http\Middleware;
+namespace Outl1ne\NovaTwoFactor\Http\Middleware;
 
 use Laravel\Nova\Nova;
-use Visanduma\NovaTwoFactor\NovaTwoFactor;
+use Outl1ne\NovaTwoFactor\NovaTwoFactor;
 
 class Authorize
 {

@@ -1,37 +1,30 @@
 <?php
 
-namespace Visanduma\NovaTwoFactor;
+namespace Outl1ne\NovaTwoFactor;
 
-use Illuminate\Http\Request;
-use Laravel\Nova\Menu\MenuSection;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Tool;
 
 class NovaTwoFactor extends Tool
 {
-    /**
-     * Perform any tasks that need to happen when the tool is booted.
-     *
-     * @return void
-     */
     public function boot()
     {
-        Nova::script('nova-two-factor', __DIR__.'/../dist/js/tool.js');
-        Nova::style('nova-two-factor', __DIR__.'/../dist/css/tool.css');
+        Nova::script('nova-two-factor', __DIR__ . '/../dist/js/entry.js');
+        Nova::style('nova-two-factor', __DIR__ . '/../dist/css/entry.css');
     }
 
-    /**
-     * Build the view that renders the navigation links for the tool.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function menu(Request $request)
+    public static function getTableName()
     {
-        if(config('nova-two-factor.showin_sidebar', true)){
-            return MenuSection::make(config('nova-two-factor.menu_text'))
-                ->path('/nova-two-factor')
-                ->icon(config('nova-two-factor.menu_icon'));
-        }
+        return config('nova-two-factor.table', 'users_two_factor');
+    }
 
+    public static function getExcludedRoutes()
+    {
+        $except = [
+            'nova-vendor/nova-two-factor/authenticate',
+            'nova-vendor/nova-two-factor/recover'
+        ];
+
+        return array_merge($except, config('nova-two-factor.excluded_routes'));
     }
 }

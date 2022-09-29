@@ -1,15 +1,18 @@
 <?php
 
-namespace Visanduma\NovaTwoFactor\Models;
+namespace Outl1ne\NovaTwoFactor\Models;
 
-use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Outl1ne\NovaTwoFactor\NovaTwoFactor;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class TwoFa extends Model
 {
-    protected $table = 'nova_twofa';
-
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+        $this->setTable(NovaTwoFactor::getTableName());
+    }
 
     public function user(): BelongsTo
     {

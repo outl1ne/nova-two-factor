@@ -1,32 +1,34 @@
 {
-    "name": "visanduma/nova-two-factor",
-    "description": "Nova Two Factor Authentication",
-    "keywords": [
-        "laravel",
-        "nova"
-    ],
-    "license": "MIT",
-    "require": {
-        "php": "^8.0",
-        "bacon/bacon-qr-code": "^2.0",
-        "pragmarx/google2fa-laravel": "^2.0",
-        "laravel/nova": "^4.0"
-    },
-    "autoload": {
-        "psr-4": {
-            "Visanduma\\NovaTwoFactor\\": "src/"
-        }
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Visanduma\\NovaTwoFactor\\ToolServiceProvider"
-            ]
-        }
-    },
-    "config": {
-        "sort-packages": true
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+  "name": "outl1ne/nova-two-factor",
+  "description": "Nova Two Factor Authentication",
+  "keywords": [
+    "laravel",
+    "nova",
+    "2fa"
+  ],
+  "license": "MIT",
+  "require": {
+    "php": ">=8.0",
+    "bacon/bacon-qr-code": "^2.0",
+    "pragmarx/google2fa-laravel": "^2.0",
+    "laravel/nova": "^4.15",
+    "outl1ne/nova-translations-loader": "^5.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Outl1ne\\NovaTwoFactor\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Outl1ne\\NovaTwoFactor\\TwoFactorServiceProvider"
+      ]
+    }
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
 }
