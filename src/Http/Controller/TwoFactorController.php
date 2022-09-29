@@ -2,7 +2,6 @@
 
 namespace Outl1ne\NovaTwoFactor\Http\Controller;
 
-
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use PragmaRX\Google2FA\Google2FA;
