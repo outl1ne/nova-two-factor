@@ -38,17 +38,17 @@ php artisan vendor:publish --provider="Outl1ne\NovaTwoFactor\TwoFactorServicePro
 php artisan migrate
 ```
 
-Add the ProtectWith2FA trait to your configured User model.
+Add the Has2FA trait to your configured User model.
 
 ```php
 <?php
 
 namespace App\Models;
 
-use Outl1ne\NovaTwoFactor\ProtectWith2FA;
+use Outl1ne\NovaTwoFactor\Has2FA;
 
 class User extends Authenticatable {
-    use ProtectWith2FA;
+    use Has2FA;
 }
 
 ```

@@ -4,7 +4,7 @@ namespace Outl1ne\NovaTwoFactor;
 
 use Outl1ne\NovaTwoFactor\Models\TwoFa;
 
-trait ProtectWith2FA
+trait Has2FA
 {
     public function twoFa()
     {
