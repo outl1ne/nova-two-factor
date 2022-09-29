@@ -27,9 +27,7 @@ class CreateNovaTwoFaTable extends Migration
             $table->text('recovery')->nullable();
             $table->timestamps();
 
-            $table->foreign('user_id')
-                ->references($userKey)
-                ->on($userTable);
+            $table->foreign('user_id')->references($userKey)->on($userTable)->cascadeOnDelete();
         });
     }
 
