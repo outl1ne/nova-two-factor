@@ -8,6 +8,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class TwoFa extends Model
 {
+    protected $casts = [
+        'google2fa_enabled' => 'boolean',
+        'confirmed' => 'boolean',
+    ];
+
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
