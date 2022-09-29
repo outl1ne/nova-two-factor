@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'enabled' => env('NOVA_TWO_FA_ENABLE', true),
+    'enabled' => env('NOVA_2FA_ENABLED', true),
 
     'table' => 'users_two_factor',
 
