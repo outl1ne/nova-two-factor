@@ -15,7 +15,10 @@ class TwoFactorServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+        if (config('nova-two-factor.autoload_migrations')) {
+            $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+        }
+
         $this->loadTranslations(__DIR__ . '/../lang', 'nova-two-factor', true);
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'nova-two-factor');
 

@@ -5,6 +5,12 @@ return [
 
     'table' => 'users_two_factor',
 
+    // Define the connection where the table should be exists
+    'connection' => null,
+
+    // Optionally disable automatically loading migrations
+    'autoload_migrations' => true,
+
     // Define the user model
     'user_model' => \App\Models\User::class,
 

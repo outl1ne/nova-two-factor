@@ -20,6 +20,11 @@ class NovaTwoFactor extends Tool
         return config('nova-two-factor.table', 'users_two_factor');
     }
 
+    public static function getConnection()
+    {
+        return config('nova-two-factor.connection', null);
+    }
+
     public static function getExcludedRoutes()
     {
         $except = [

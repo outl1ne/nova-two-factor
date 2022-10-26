@@ -17,6 +17,7 @@ class TwoFa extends Model
     {
         parent::__construct($attributes);
         $this->setTable(NovaTwoFactor::getTableName());
+        $this->setConnection(NovaTwoFactor::getConnection());
     }
 
     public function user(): BelongsTo
