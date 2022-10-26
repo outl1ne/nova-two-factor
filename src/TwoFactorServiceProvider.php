@@ -25,7 +25,7 @@ class TwoFactorServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->publishes([
                 __DIR__ . '/../config/nova-two-factor.php' => config_path('nova-two-factor.php'),
-            ], 'nova-two-factor.config');
+            ], 'config');
 
             $this->publishes([
                 __DIR__ . '/../database/migrations/' => database_path('migrations')
